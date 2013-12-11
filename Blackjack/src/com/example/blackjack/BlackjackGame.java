@@ -7,7 +7,9 @@ import java.util.Random;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class BlackjackGame extends Activity {
 	
@@ -21,27 +23,32 @@ public class BlackjackGame extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.play_game);
-        
-    	ArrayList<Card> playerHand = new ArrayList<Card>();
-    	ArrayList<Card> dealerHand = new ArrayList<Card>();
-        //Create a New Deck
-        for(int i = 1; i < 4; i++){
-        	for(int j = 1; j < 13; j++){
-			
-        		Card newCard = new Card(i,j);
-        		cardDeck.add(newCard);
-        	}
-        }
-        
-        //Shuffle Deck
-        long seed = System.nanoTime();
-        Collections.shuffle(cardDeck, new Random(seed));
-
-        //Deal Initial Cards
-        playerHand = drawCard(playerHand);
-        playerHand = drawCard(playerHand);
-        dealerHand = drawCard(dealerHand);
-        dealerHand = drawCard(dealerHand);
+        Intent intent = getIntent();
+//    	ArrayList<Card> playerHand = new ArrayList<Card>();
+//    	ArrayList<Card> dealerHand = new ArrayList<Card>();
+//        //Create a New Deck
+//        for(int i = 1; i < 4; i++){
+//        	for(int j = 1; j < 13; j++){
+//			
+//        		Card newCard = new Card(i,j);
+//        		cardDeck.add(newCard);
+//        	}
+//        }
+//        
+//        //Shuffle Deck
+//        long seed = System.nanoTime();
+//        Collections.shuffle(cardDeck, new Random(seed));
+//
+//        TextView playerValueArea = (TextView) findViewById(R.id.player_total);
+//        //Deal Initial Cards
+//        playerHand = drawCard(playerHand);
+//        playerHand = drawCard(playerHand);
+//        dealerHand = drawCard(dealerHand);
+//        dealerHand = drawCard(dealerHand);
+//		for(int i = 0; i < playerHand.size(); i++){
+//			playerValue= playerValue + playerHand.get(i).getValue();
+//		}
+//        playerValueArea.setText(playerValue);
         
 	}
 	
@@ -50,6 +57,7 @@ public class BlackjackGame extends Activity {
 	public ArrayList<Card> drawCard(ArrayList<Card> hand){
 		
 		hand.add(cardDeck.get(cardCounter));
+		cardCounter++;
 		return hand;
 	}
 	
@@ -88,11 +96,15 @@ public class BlackjackGame extends Activity {
 		builder.setPositiveButton("Play again", new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int id) {
 				//Restart activity
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
 			}
 		});
 		builder.setNegativeButton("Quit", new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int id) {
-				//Restart activity
+				//Quit 
+				finish();
 			}
 		});
 		
@@ -101,6 +113,7 @@ public class BlackjackGame extends Activity {
 			builder.setMessage("Congratulations! Blackjack!");
 			builder.setTitle("Winner!");
 			AlertDialog dialog = builder.create();
+			dialog.show();
 			
 			//Create alert saying they won, button to restart game
 		}
@@ -110,6 +123,7 @@ public class BlackjackGame extends Activity {
 			builder.setTitle("Loss!");
 			AlertDialog dialog = builder.create();
 			//Create alert saying they loss, button to restart game 
+			dialog.show();
 		}
 		else
 		{
@@ -129,6 +143,7 @@ public class BlackjackGame extends Activity {
 			gameBuilder.setMessage("Your current total is " + totalValue + ", do you wish to hit or stay?");
 			gameBuilder.setTitle("Your Turn");
 			AlertDialog dialog = gameBuilder.create();
+			dialog.show();
 			//Create alert asking if they want to draw or stay. Go to Dealer's turn.
 		}
 		
