@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class BlackjackGame extends Activity {
@@ -24,38 +25,39 @@ public class BlackjackGame extends Activity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.play_game);
         Intent intent = getIntent();
-//    	ArrayList<Card> playerHand = new ArrayList<Card>();
-//    	ArrayList<Card> dealerHand = new ArrayList<Card>();
-//        //Create a New Deck
-//        for(int i = 1; i < 4; i++){
-//        	for(int j = 1; j < 13; j++){
-//			
-//        		Card newCard = new Card(i,j);
-//        		cardDeck.add(newCard);
-//        	}
-//        }
-//        
-//        //Shuffle Deck
-//        long seed = System.nanoTime();
-//        Collections.shuffle(cardDeck, new Random(seed));
-//
-//        TextView playerValueArea = (TextView) findViewById(R.id.player_total);
-//        //Deal Initial Cards
-//        playerHand = drawCard(playerHand);
-//        playerHand = drawCard(playerHand);
-//        dealerHand = drawCard(dealerHand);
-//        dealerHand = drawCard(dealerHand);
-//		for(int i = 0; i < playerHand.size(); i++){
-//			playerValue= playerValue + playerHand.get(i).getValue();
-//		}
-//        playerValueArea.setText(playerValue);
+    	ArrayList<Card> playerHand = new ArrayList<Card>();
+    	ArrayList<Card> dealerHand = new ArrayList<Card>();
+        //Create a New Deck
+        for(int i = 1; i < 4; i++){
+        	for(int j = 1; j < 13; j++){
+			
+        		Card newCard = new Card(i,j);
+        		cardDeck.add(newCard);
+        	}
+        }
+        
+        //Shuffle Deck
+        long seed = System.nanoTime();
+        Collections.shuffle(cardDeck, new Random(seed));
+
+        TextView playerValueArea = (TextView) findViewById(R.id.player_total);
+        //Deal Initial Cards
+        playerHand = drawCard(playerHand);
+        playerHand = drawCard(playerHand);
+        dealerHand = drawCard(dealerHand);
+        dealerHand = drawCard(dealerHand);
+		for(int i = 0; i < playerHand.size(); i++){
+			playerValue = playerValue + playerHand.get(i).getValue();
+		}
+		Log.d("PWD",Integer.toString(playerValue));
+        playerValueArea.setText(Integer.toString(playerValue));
         
 	}
 	
 	
 	//Draw a Card
 	public ArrayList<Card> drawCard(ArrayList<Card> hand){
-		
+		//Log.d("PWD",cardDeck.get(cardCounter));
 		hand.add(cardDeck.get(cardCounter));
 		cardCounter++;
 		return hand;
