@@ -1,31 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="#ff194D1E">
+    android:background="#ff194D1E"
+    android:orientation="vertical">
     
 <RelativeLayout
-    android:layout_width="200dp"
+    android:layout_width="match_parent"
     android:layout_height="200dp"
     android:id="@+id/dealer_area"
     >
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/dealer_total"/>
+    
+</RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:id="@+id/card_area">
+
+        
+    <ImageView 
+        android:contentDescription="@string/desc"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:id="@+id/deck"
+        android:scaleType="fitCenter"
+        />
     
 </RelativeLayout>
 
 <RelativeLayout
-    android:layout_width="200dp"
+    android:layout_width="match_parent"
     android:layout_height="200dp"
     android:id="@+id/player_area"
+    android:layout_marginTop="25sp"
     >
-    
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:id="@+id/hit_button"
+        android:text="@string/hit"
+        android:layout_toLeftOf="@+id/player_total"/>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="25sp"
         android:id="@+id/player_total"/>
-        
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:id="@+id/stay_button"
+        android:text="@string/stay"
+        android:layout_toRightOf="@+id/player_total"
+        />
 </RelativeLayout>
 
     
 
-</RelativeLayout>
+</LinearLayout>

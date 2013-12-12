@@ -1,10 +1,17 @@
 package com.example.blackjack;
 
 public class Card {
-	private int suit, value;
-	public Card(int newSuit, int newValue){
+	private int suit, value, number;
+	public Card(int newSuit, int newNumber){
 		suit = newSuit;
-		value = newValue;
+		number = newNumber;
+		if(number > 10)
+			value = 10;
+		else if(number == 1)
+			value = 11;
+		else
+			value = number;
+			
 	}
 	
 	public int getSuit(){
@@ -12,5 +19,11 @@ public class Card {
 	}
 	public int getValue(){
 		return value;
+	}
+	public int getNumber(){
+		return number;
+	}
+	public void setValue(int val){
+		value = val;
 	}
 }
