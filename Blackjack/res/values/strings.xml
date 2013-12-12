@@ -9,5 +9,7 @@
     <string name="stay">Stay</string>
     <string name="desc">Card Back</string>
     <string name="king">K</string>
+    <string name="player_info">Player Value</string>
+    <string name="dealer_info">Dealer Total Shown Value</string>
 
 </resources>

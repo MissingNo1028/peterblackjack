@@ -39,6 +39,8 @@ public class MainActivity extends Activity {
 
 	public void startGame(View view){
 		Intent myIntent = new Intent(this, BlackjackGame.class);
+		int chips = 200;
+		myIntent.putExtra("chips", chips);
 	    startActivity(myIntent);
 	}
 }

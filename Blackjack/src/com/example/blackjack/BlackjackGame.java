@@ -15,10 +15,8 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,13 +31,16 @@ public class BlackjackGame extends Activity {
 	int cardCounter = 0;
 	int playerValue = 0;
 	int dealerValue = 0;
+	int playerHandCount = 0;
+	int dealerHandCount = 0;
+	int playerChips = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.play_game);
         Intent intent = getIntent();
-        
+        playerChips = getIntent().getIntExtra("chips",-1);
 		Button hit = (Button) findViewById(R.id.hit_button);
 		View.OnClickListener hitClickListener = new View.OnClickListener() {
 			
@@ -92,7 +93,7 @@ public class BlackjackGame extends Activity {
 		Log.d("PWD",Integer.toString(playerValue));
         playerValueArea.setText(Integer.toString(playerValue));
         playerTurn(playerHand);
-        int dealerShowValue = dealerHand.get(0).getValue();
+        int dealerShowValue = dealerHand.get(1).getValue();
         dealerValueArea.setText(Integer.toString(dealerShowValue));
         dealer = dealerHand;
         
@@ -113,10 +114,12 @@ public class BlackjackGame extends Activity {
 		RelativeLayout deckLayout = (RelativeLayout)findViewById(R.id.card_area);
 		TextView newCard = new TextView(this);
 		final ImageView newDraw = new ImageView(this);
-		
 		int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
 		int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, getResources().getDisplayMetrics());
 		newCard.setLayoutParams(new RelativeLayout.LayoutParams(width,height));
+		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)newCard.getLayoutParams();
+		layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
+		newCard.setLayoutParams(layoutParams);
 		newCard.setGravity(Gravity.CENTER);
 		newCard.setText(drawnCard.getFace());
 		newCard.setTextSize(15);
@@ -137,34 +140,94 @@ public class BlackjackGame extends Activity {
 		}
 
 		
-	    TranslateAnimation anim = new TranslateAnimation( 0, 0 , 0, 200 );
+	    TranslateAnimation anim = new TranslateAnimation( 0, -50 + (playerHandCount * 50), 0, 275 );
 	    anim.setDuration(1000);
 	    anim.setFillAfter( true );
 	    deckLayout.addView(newCard);
 	    newCard.startAnimation(anim);
 		
 
-		try {
-				synchronized(this){
-					wait(3000);
-				}
-		  	}
-		        catch(InterruptedException ex){                    
+	    try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		            // TODO              
-       
+		playerHandCount++;
 		return hand;
 	}
 	
 	
 	public ArrayList<Card> dealerDrawCard(ArrayList<Card> hand){
 		//Log.d("PWD",cardDeck.get(cardCounter));
-		hand.add(cardDeck.get(cardCounter));
-		dealerValue = dealerValue + cardDeck.get(cardCounter).getValue();
+		Card drawnCard = cardDeck.get(cardCounter);
+		hand.add(drawnCard);
+		
+		dealerValue = dealerValue + drawnCard.getValue();
 		cardCounter++;
 		TextView dealerValueArea = (TextView) findViewById(R.id.dealer_total);
 		dealerValueArea.setText(Integer.toString(dealerValue));
+		
+		RelativeLayout deckLayout = (RelativeLayout)findViewById(R.id.card_area);
+		TextView newCard = new TextView(this);
+		final ImageView newDraw = new ImageView(this);
+		int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
+		int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, getResources().getDisplayMetrics());
+		newCard.setLayoutParams(new RelativeLayout.LayoutParams(width,height));
+		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)newCard.getLayoutParams();
+		layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
+		newDraw.setLayoutParams(layoutParams);
+		newDraw.setImageDrawable(getResources().getDrawable(R.drawable.cardback));
+		newCard.setLayoutParams(layoutParams);
+		newCard.setGravity(Gravity.CENTER);
+		newCard.setText(drawnCard.getFace());
+		newCard.setTextSize(15);
+		int newSuit = drawnCard.getSuit();
+		switch (newSuit) {
+		case 1: newCard.setBackground(getResources().getDrawable(R.drawable.spadesdrawable));
+				newCard.setTextColor(0xffff0000);
+				break;
+		case 2: newCard.setBackground(getResources().getDrawable(R.drawable.clubsdrawable));
+				newCard.setTextColor(0xffff0000);
+				break;
+		case 3: newCard.setBackground(getResources().getDrawable(R.drawable.heartsdrawable));
+				newCard.setTextColor(0xff000000);
+				break;
+		case 4: newCard.setBackground(getResources().getDrawable(R.drawable.diamonddrawable));
+				newCard.setTextColor(0xff000000);
+				break;
+		}
+
+		
+	    TranslateAnimation anim = new TranslateAnimation( 0, -50 + (dealerHandCount * 50), 0, -275 );
+	    anim.setDuration(1000);
+	    anim.setFillAfter( true );
+	    if(dealerHandCount == 0){
+	    	newDraw.setId(1);
+	    	newCard.setId(2);
+	    	deckLayout.addView(newDraw);
+	    	newDraw.startAnimation(anim);
+	    	deckLayout.addView(newCard);
+	    	newCard.setVisibility(View.INVISIBLE);
+	    	newCard.startAnimation(anim);
+	    }
+	    else{
+	    	deckLayout.addView(newCard);
+	    	newCard.startAnimation(anim);
+	    }
+
+	                   
+	    try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		            // TODO              
+		dealerHandCount++;
 		return hand;
 	}
 	
@@ -233,6 +296,7 @@ public class BlackjackGame extends Activity {
 			public void onClick(DialogInterface dialog, int id) {
 				//Restart activity
 				Intent intent = getIntent();
+				intent.putExtra("chips", playerChips);
 				finish();
 				startActivity(intent);
 			}
@@ -295,10 +359,15 @@ public class BlackjackGame extends Activity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
         TextView dealerValueArea = (TextView) findViewById(R.id.dealer_total);
         dealerValueArea.setText(Integer.toString(dealerValue));
+        TextView faceDown = (TextView) findViewById(1);
+        TextView faceUp = (TextView) findViewById(2);
+        faceDown.setVisibility(View.INVISIBLE);
+        faceUp.setVisibility(View.VISIBLE);
 		builder.setPositiveButton("Play again", new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int id) {
 				//Restart activity
 				Intent intent = getIntent();
+				intent.putExtra("chips", playerChips);
 				finish();
 				startActivity(intent);
 			}
@@ -363,6 +432,7 @@ public class BlackjackGame extends Activity {
 			public void onClick(DialogInterface dialog, int id) {
 				//Restart activity
 				Intent intent = getIntent();
+				intent.putExtra("chips", playerChips);
 				finish();
 				startActivity(intent);
 			}

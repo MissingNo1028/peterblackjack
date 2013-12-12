@@ -7,20 +7,30 @@
     
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="75dp"
     android:id="@+id/dealer_area"
+    android:background="@drawable/dealerdrawable"
     >
+    <TextView android:layout_centerHorizontal="true"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:id="@+id/dealer_message"
+        	android:textSize="18sp"
+        	android:text="@string/dealer_info"
+        	android:textColor="#FFFFFF"/>
     <TextView
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:id="@+id/dealer_total"/>
+        android:id="@+id/dealer_total"
+        android:layout_below="@+id/dealer_message"
+        android:textColor="#FFFFFF"/>
     
 </RelativeLayout>
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="350dp"
     android:id="@+id/card_area">
 
     <RelativeLayout
@@ -62,7 +72,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:id="@+id/player_area"
-    android:layout_marginTop="50sp"
+    android:background="@drawable/playerdrawable"
     >
     <Button 
         android:layout_width="wrap_content"
@@ -70,13 +80,23 @@
         android:textSize="15sp"
         android:id="@+id/hit_button"
         android:text="@string/hit"
-        android:layout_toLeftOf="@+id/player_total"/>
+        android:layout_toLeftOf="@+id/player_total"
+        android:layout_below="@+id/player_message"/>
+    <TextView android:layout_centerHorizontal="true"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:id="@+id/player_message"
+        	android:textSize="18sp"
+        	android:text="@string/player_info"
+        	android:textColor="#FFFFFF"/>
     <TextView
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:id="@+id/player_total"/>
+        android:id="@+id/player_total"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/player_message"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,6 +104,7 @@
         android:id="@+id/stay_button"
         android:text="@string/stay"
         android:layout_toRightOf="@+id/player_total"
+        android:layout_below="@+id/player_message"
         />
 </RelativeLayout>
 
