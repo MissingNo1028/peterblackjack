@@ -26,4 +26,21 @@ public class Card {
 	public void setValue(int val){
 		value = val;
 	}
+	public String getFace(){
+
+		String face = "";
+	
+		if(number == 1)
+			face = "A";
+		else if(number == 11)
+			face = "J";
+		else if(number == 12)
+			face = "Q";
+		else if (number == 13)
+			face = "K";
+		else
+			face = Integer.toString(number);
+		
+		return face;
+	}
 }

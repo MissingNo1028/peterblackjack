@@ -4,17 +4,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+@SuppressLint("NewApi")
 public class BlackjackGame extends Activity {
 	
 	
@@ -60,8 +69,8 @@ public class BlackjackGame extends Activity {
     	ArrayList<Card> playerHand = new ArrayList<Card>();
     	ArrayList<Card> dealerHand = new ArrayList<Card>();
         //Create a New Deck
-        for(int i = 1; i < 4; i++){
-        	for(int j = 1; j < 13; j++){
+        for(int i = 1; i <= 4; i++){
+        	for(int j = 1; j <= 13; j++){
 			
         		Card newCard = new Card(i,j);
         		cardDeck.add(newCard);
@@ -94,13 +103,60 @@ public class BlackjackGame extends Activity {
 	//Draw a Card
 	public ArrayList<Card> playerDrawCard(ArrayList<Card> hand){
 		//Log.d("PWD",cardDeck.get(cardCounter));
-		hand.add(cardDeck.get(cardCounter));
-		playerValue = playerValue + cardDeck.get(cardCounter).getValue();
+		Card drawnCard = cardDeck.get(cardCounter);
+		hand.add(drawnCard);
+		playerValue = playerValue + drawnCard.getValue();
 		cardCounter++;
 		TextView playerValueArea = (TextView) findViewById(R.id.player_total);
 		playerValueArea.setText(Integer.toString(playerValue));
+		
+		RelativeLayout deckLayout = (RelativeLayout)findViewById(R.id.card_area);
+		TextView newCard = new TextView(this);
+		final ImageView newDraw = new ImageView(this);
+		
+		int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
+		int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, getResources().getDisplayMetrics());
+		newCard.setLayoutParams(new RelativeLayout.LayoutParams(width,height));
+		newCard.setGravity(Gravity.CENTER);
+		newCard.setText(drawnCard.getFace());
+		newCard.setTextSize(15);
+		int newSuit = drawnCard.getSuit();
+		switch (newSuit) {
+		case 1: newCard.setBackground(getResources().getDrawable(R.drawable.spadesdrawable));
+				newCard.setTextColor(0xffff0000);
+				break;
+		case 2: newCard.setBackground(getResources().getDrawable(R.drawable.clubsdrawable));
+				newCard.setTextColor(0xffff0000);
+				break;
+		case 3: newCard.setBackground(getResources().getDrawable(R.drawable.heartsdrawable));
+				newCard.setTextColor(0xff000000);
+				break;
+		case 4: newCard.setBackground(getResources().getDrawable(R.drawable.diamonddrawable));
+				newCard.setTextColor(0xff000000);
+				break;
+		}
+
+		
+	    TranslateAnimation anim = new TranslateAnimation( 0, 0 , 0, 200 );
+	    anim.setDuration(1000);
+	    anim.setFillAfter( true );
+	    deckLayout.addView(newCard);
+	    newCard.startAnimation(anim);
+		
+
+		try {
+				synchronized(this){
+					wait(3000);
+				}
+		  	}
+		        catch(InterruptedException ex){                    
+		}
+
+		            // TODO              
+       
 		return hand;
 	}
+	
 	
 	public ArrayList<Card> dealerDrawCard(ArrayList<Card> hand){
 		//Log.d("PWD",cardDeck.get(cardCounter));

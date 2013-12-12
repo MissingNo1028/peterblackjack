@@ -8,5 +8,6 @@
     <string name="hit">Hit</string>
     <string name="stay">Stay</string>
     <string name="desc">Card Back</string>
+    <string name="king">K</string>
 
 </resources>
