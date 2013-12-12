@@ -41,6 +41,11 @@ public class BlackjackGame extends Activity {
         setContentView(R.layout.play_game);
         Intent intent = getIntent();
         playerChips = getIntent().getIntExtra("chips",-1);
+        if(playerChips == 0){
+        	finish();
+        }
+        TextView chipView = (TextView) findViewById(R.id.current_chips);
+        chipView.setText("$" + Integer.toString(playerChips));
 		Button hit = (Button) findViewById(R.id.hit_button);
 		View.OnClickListener hitClickListener = new View.OnClickListener() {
 			
@@ -207,11 +212,11 @@ public class BlackjackGame extends Activity {
 	    if(dealerHandCount == 0){
 	    	newDraw.setId(1);
 	    	newCard.setId(2);
-	    	deckLayout.addView(newDraw);
-	    	newDraw.startAnimation(anim);
 	    	deckLayout.addView(newCard);
 	    	newCard.setVisibility(View.INVISIBLE);
+	    	deckLayout.addView(newDraw);
 	    	newCard.startAnimation(anim);
+	    	newDraw.startAnimation(anim);
 	    }
 	    else{
 	    	deckLayout.addView(newCard);
@@ -312,6 +317,7 @@ public class BlackjackGame extends Activity {
 		{
 			builder.setMessage("Congratulations! Blackjack!");
 			builder.setTitle("Winner!");
+			playerChips = playerChips + 50;
 			AlertDialog dialog = builder.create();
 			dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			dialog.show();
@@ -322,6 +328,7 @@ public class BlackjackGame extends Activity {
 		{
 			builder.setMessage("Bust!");
 			builder.setTitle("Loss!");
+			playerChips = playerChips -50;
 			AlertDialog dialog = builder.create();
 			dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			//Create alert saying they loss, button to restart game 
@@ -357,12 +364,6 @@ public class BlackjackGame extends Activity {
 		int cpu = winCheck(hand,2);
 		boolean over = false;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        TextView dealerValueArea = (TextView) findViewById(R.id.dealer_total);
-        dealerValueArea.setText(Integer.toString(dealerValue));
-        TextView faceDown = (TextView) findViewById(1);
-        TextView faceUp = (TextView) findViewById(2);
-        faceDown.setVisibility(View.INVISIBLE);
-        faceUp.setVisibility(View.VISIBLE);
 		builder.setPositiveButton("Play again", new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int id) {
 				//Restart activity
@@ -381,6 +382,7 @@ public class BlackjackGame extends Activity {
 		while(over == false){
 		if(cpu == -1){
 			//Win Alert
+			playerChips = playerChips + 50;
 			over = true;
 			builder.setMessage("The Dealer Loses!");
 			builder.setTitle("Winner!");
@@ -390,6 +392,7 @@ public class BlackjackGame extends Activity {
 		}
 		else if(cpu == 1){
 			over = true;
+			playerChips = playerChips -50;
 			//Loss Alert
 			builder.setMessage("The Dealer Wins!");
 			builder.setTitle("Loser!");
@@ -447,6 +450,7 @@ public class BlackjackGame extends Activity {
 		{
 			builder.setMessage("Bust!");
 			builder.setTitle("Loss!");
+			playerChips = playerChips -50;
 			AlertDialog dialog = builder.create();
 			dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			//Create alert saying they loss, button to restart game 
@@ -459,6 +463,12 @@ public class BlackjackGame extends Activity {
 		Button hit = (Button) findViewById(R.id.hit_button);
 		stay.setVisibility(View.INVISIBLE);
 		hit.setVisibility(View.INVISIBLE);
+		TextView dealerValueArea = (TextView) findViewById(R.id.dealer_total);
+        dealerValueArea.setText(Integer.toString(dealerValue));
+        ImageView faceDown = (ImageView) findViewById(1);
+        TextView faceUp = (TextView) findViewById(2);
+        faceDown.setVisibility(View.INVISIBLE);
+        faceUp.setVisibility(View.VISIBLE);
 		dealerTurn(dealer);
 
 	}

@@ -32,22 +32,16 @@
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:id="@+id/card_area">
-
-    <RelativeLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/dealer_cards"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/deck"
-        android:layout_marginBottom="50sp">
-        
-        
-    </RelativeLayout>
-            <RelativeLayout android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/deck"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/deck_image"
+            android:layout_marginRight="30sp" 
+            android:textSize="20sp"
+            android:textColor="#b2b200"
+            android:text="@string/bid"
+            />
         <ImageView
         android:id="@+id/deck_image"
         android:layout_height="80dp"
@@ -56,15 +50,16 @@
         android:layout_centerVertical="true"
         android:src="@drawable/cardback"
         />
-        </RelativeLayout>
-        <RelativeLayout android:layout_width="wrap_content"
+                <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/player_cards"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/deck"
-            android:layout_marginTop="50sp">
-            
-        </RelativeLayout>
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/deck_image"
+            android:layout_marginLeft="25sp" 
+            android:textSize="20sp"
+            android:textColor="#b2b200"
+            android:text="@string/bid"
+            />
     
 </RelativeLayout>
 
@@ -74,6 +69,24 @@
     android:id="@+id/player_area"
     android:background="@drawable/playerdrawable"
     >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/chip_info"
+            android:layout_toLeftOf="@+id/hit_button"
+            android:layout_marginRight="10sp"
+            android:text="@string/current_pot" 
+            android:textColor="#FFFFFF"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:layout_below="@+id/chip_info"
+            android:layout_marginRight="10sp"
+            android:layout_toLeftOf="@+id/hit_button"
+            android:id="@+id/current_chips"/>
     <Button 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
