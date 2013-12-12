@@ -35,8 +35,8 @@ public final class R {
         public static final int card_area=0x7f080004;
         public static final int dealer_area=0x7f080002;
         public static final int dealer_total=0x7f080003;
-        public static final int deck=0x7f080005;
         public static final int hit_button=0x7f080007;
+        public static final int image=0x7f080005;
         public static final int player_area=0x7f080006;
         public static final int player_total=0x7f080008;
         public static final int start=0x7f080001;

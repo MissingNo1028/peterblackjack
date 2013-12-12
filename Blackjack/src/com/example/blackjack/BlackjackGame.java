@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -138,6 +139,18 @@ public class BlackjackGame extends Activity {
 					totalValue= totalValue + hand.get(i).getValue();
 				}
 				
+				if(id == 1){
+					playerValue = totalValue;
+					TextView playerValueArea = (TextView) findViewById(R.id.player_total);
+					playerValueArea.setText(Integer.toString(playerValue));
+				}
+				else if(id == 2){
+					dealerValue = totalValue;
+					TextView dealerValueArea = (TextView) findViewById(R.id.dealer_total);
+					dealerValueArea.setText(Integer.toString(dealerValue));
+				}
+					
+				
 			}
 			if(totalValue > 21)
 				return -1;
@@ -180,6 +193,7 @@ public class BlackjackGame extends Activity {
 			builder.setMessage("Congratulations! Blackjack!");
 			builder.setTitle("Winner!");
 			AlertDialog dialog = builder.create();
+			dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			dialog.show();
 			
 			//Create alert saying they won, button to restart game
@@ -189,6 +203,7 @@ public class BlackjackGame extends Activity {
 			builder.setMessage("Bust!");
 			builder.setTitle("Loss!");
 			AlertDialog dialog = builder.create();
+			dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			//Create alert saying they loss, button to restart game 
 			dialog.show();
 		}
@@ -245,6 +260,7 @@ public class BlackjackGame extends Activity {
 			builder.setMessage("The Dealer Loses!");
 			builder.setTitle("Winner!");
 			AlertDialog dialog = builder.create();
+			dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			dialog.show();
 		}
 		else if(cpu == 1){
@@ -253,6 +269,7 @@ public class BlackjackGame extends Activity {
 			builder.setMessage("The Dealer Wins!");
 			builder.setTitle("Loser!");
 			AlertDialog dialog = builder.create();
+			dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			dialog.show();
 		}
 		else{
@@ -305,6 +322,7 @@ public class BlackjackGame extends Activity {
 			builder.setMessage("Bust!");
 			builder.setTitle("Loss!");
 			AlertDialog dialog = builder.create();
+			dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			//Create alert saying they loss, button to restart game 
 			dialog.show();
 		}
