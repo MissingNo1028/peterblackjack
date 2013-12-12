@@ -25,28 +25,34 @@ import android.widget.TextView;
 public class BlackjackGame extends Activity {
 	
 	
-	ArrayList<Card> cardDeck = new ArrayList<Card>();
-	ArrayList<Card> player = new ArrayList<Card>();
-	ArrayList<Card> dealer = new ArrayList<Card>();
-	int cardCounter = 0;
-	int playerValue = 0;
-	int dealerValue = 0;
-	int playerHandCount = 0;
-	int dealerHandCount = 0;
-	int playerChips = 0;
+	ArrayList<Card> cardDeck = new ArrayList<Card>(); //The full deck of cards
+	ArrayList<Card> player = new ArrayList<Card>(); //The player's hand
+	ArrayList<Card> dealer = new ArrayList<Card>(); //The dealer's hand
+	int cardCounter = 0; //Current amount of cards drawn.
+	int playerValue = 0; //Current total value of player
+	int dealerValue = 0; //Current total value of dealer
+	int playerHandCount = 0; //Current amount of cards in player hand.
+	int dealerHandCount = 0; //Current amount of cards in dealer hand.
+	int playerChips = 0; //Player's chips.
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.play_game);
         Intent intent = getIntent();
+        //Get PlayerChips from Previous Activity
+        //200 if Starting, reads from the activity if not.
         playerChips = getIntent().getIntExtra("chips",-1);
+        //If player has zero chips, end the game.
         if(playerChips == 0){
         	finish();
         }
+        //Show player Current Chips
         TextView chipView = (TextView) findViewById(R.id.current_chips);
         chipView.setText("$" + Integer.toString(playerChips));
 		Button hit = (Button) findViewById(R.id.hit_button);
+		
+		//Click Listeners
 		View.OnClickListener hitClickListener = new View.OnClickListener() {
 			
 			@Override
@@ -72,6 +78,7 @@ public class BlackjackGame extends Activity {
 		
 		stay.setOnClickListener(stayClickListener);
 		
+		//Initiate both PlayerHands.
     	ArrayList<Card> playerHand = new ArrayList<Card>();
     	ArrayList<Card> dealerHand = new ArrayList<Card>();
         //Create a New Deck
@@ -106,9 +113,10 @@ public class BlackjackGame extends Activity {
 	}
 	
 	
-	//Draw a Card
+	//Draw a Card For Player
 	public ArrayList<Card> playerDrawCard(ArrayList<Card> hand){
 		//Log.d("PWD",cardDeck.get(cardCounter));
+		//Draw the next card in the deck. Add it to the hand and player value. Update the visual value.
 		Card drawnCard = cardDeck.get(cardCounter);
 		hand.add(drawnCard);
 		playerValue = playerValue + drawnCard.getValue();
@@ -116,6 +124,7 @@ public class BlackjackGame extends Activity {
 		TextView playerValueArea = (TextView) findViewById(R.id.player_total);
 		playerValueArea.setText(Integer.toString(playerValue));
 		
+		//Create the card visually.
 		RelativeLayout deckLayout = (RelativeLayout)findViewById(R.id.card_area);
 		TextView newCard = new TextView(this);
 		final ImageView newDraw = new ImageView(this);
@@ -129,6 +138,7 @@ public class BlackjackGame extends Activity {
 		newCard.setText(drawnCard.getFace());
 		newCard.setTextSize(15);
 		int newSuit = drawnCard.getSuit();
+		//Use drawable based on the suit.
 		switch (newSuit) {
 		case 1: newCard.setBackground(getResources().getDrawable(R.drawable.spadesdrawable));
 				newCard.setTextColor(0xffff0000);
@@ -144,7 +154,7 @@ public class BlackjackGame extends Activity {
 				break;
 		}
 
-		
+		//Move card to the correct location.
 	    TranslateAnimation anim = new TranslateAnimation( 0, -50 + (playerHandCount * 50), 0, 275 );
 	    anim.setDuration(1000);
 	    anim.setFillAfter( true );
@@ -167,6 +177,8 @@ public class BlackjackGame extends Activity {
 	
 	public ArrayList<Card> dealerDrawCard(ArrayList<Card> hand){
 		//Log.d("PWD",cardDeck.get(cardCounter));
+		
+		//Deal next card in deck. Update values.
 		Card drawnCard = cardDeck.get(cardCounter);
 		hand.add(drawnCard);
 		
@@ -212,6 +224,7 @@ public class BlackjackGame extends Activity {
 	    if(dealerHandCount == 0){
 	    	newDraw.setId(1);
 	    	newCard.setId(2);
+	    	newCard.setVisibility(View.INVISIBLE);
 	    	deckLayout.addView(newCard);
 	    	newCard.setVisibility(View.INVISIBLE);
 	    	deckLayout.addView(newDraw);
@@ -427,6 +440,7 @@ public class BlackjackGame extends Activity {
 	
 	}
 	public void playerHit(View view){
+		//If player hits, draw a new card, check for bust.
 		player = playerDrawCard(player);
 		int game = 0;
 		game = winCheck(player,1);
@@ -459,6 +473,7 @@ public class BlackjackGame extends Activity {
 	}
 	
 	public void playerStay(View view){
+		//If player stays, begin dealer turn.
 		Button stay = (Button) findViewById(R.id.stay_button);
 		Button hit = (Button) findViewById(R.id.hit_button);
 		stay.setVisibility(View.INVISIBLE);
@@ -469,6 +484,7 @@ public class BlackjackGame extends Activity {
         TextView faceUp = (TextView) findViewById(2);
         faceDown.setVisibility(View.INVISIBLE);
         faceUp.setVisibility(View.VISIBLE);
+        
 		dealerTurn(dealer);
 
 	}

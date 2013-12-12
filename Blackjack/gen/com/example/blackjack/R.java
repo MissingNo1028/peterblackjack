@@ -37,20 +37,22 @@ public final class R {
         public static final int spadesdrawable=0x7f02000d;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000e;
+        public static final int action_settings=0x7f080010;
+        public static final int blackjack_sign1=0x7f080007;
+        public static final int blackjack_sign_2=0x7f080008;
         public static final int card_area=0x7f080005;
-        public static final int chip_info=0x7f080008;
-        public static final int current_chips=0x7f08000a;
+        public static final int chip_info=0x7f08000a;
+        public static final int current_chips=0x7f08000c;
         public static final int dealer_area=0x7f080002;
         public static final int dealer_message=0x7f080003;
         public static final int dealer_total=0x7f080004;
         public static final int deck_image=0x7f080006;
-        public static final int hit_button=0x7f080009;
-        public static final int player_area=0x7f080007;
-        public static final int player_message=0x7f08000c;
-        public static final int player_total=0x7f08000b;
+        public static final int hit_button=0x7f08000b;
+        public static final int player_area=0x7f080009;
+        public static final int player_message=0x7f08000e;
+        public static final int player_total=0x7f08000d;
         public static final int start=0x7f080001;
-        public static final int stay_button=0x7f08000d;
+        public static final int stay_button=0x7f08000f;
         public static final int welcome_message=0x7f080000;
     }
     public static final class layout {
@@ -64,6 +66,7 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int bid=0x7f05000b;
+        public static final int blackjack=0x7f05000c;
         public static final int current_pot=0x7f05000a;
         public static final int dealer_info=0x7f050009;
         public static final int desc=0x7f050006;

@@ -13,4 +13,5 @@
     <string name="dealer_info">Dealer Total Shown Value</string>
 	<string name = "current_pot">Your Chips</string>
 	<string name="bid">50 Chip Bid</string>
+	<string name="blackjack">BLACKJACK</string>
 </resources>
